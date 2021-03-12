@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/core";
 import { KeyboardArrowDown } from "@material-ui/icons";
 import CheckIcon from "@material-ui/icons/Check";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const data = [
-  //   "Lorem ipsum dolor sit amet,.5555555555555555555555555555555555555555555555555",
+  "Lorem ipsum dolor sit amet,.5555555555555555555555555555555555555555555555555",
   20,
   30,
   40,
@@ -16,8 +17,16 @@ const data = [
 
 const useStyles = makeStyles(() => ({
   root: {
-    // width: "auto",
+    // "& :focus": {
+    //   border: "solid 1px #1a7ae5",
+    //   borderRadius: "8px",
+    // },
   },
+  focused: {
+    // border: "solid 1px #1a7ae5",
+    // borderRadius: "8px",
+  },
+
   field: {
     "& .MuiInputBase-root": {
       width: "368px",
@@ -27,7 +36,16 @@ const useStyles = makeStyles(() => ({
       fontSize: "16px",
       color: "#212529",
       fontFamily: "SourceSansPro",
+      border: "solid 1px #e9ecef",
+
+      "&:hover fieldset": {
+        border: "solid 1px #1a7ae5",
+      },
+      "&.Mui-focused fieldset": {
+        border: "solid 1px #1a7ae5",
+      },
     },
+
     "& .MuiSvgIcon-root": {
       color: "#212529",
     },
@@ -49,7 +67,7 @@ const useStyles = makeStyles(() => ({
     "& .MuiAutocomplete-listbox": {
       padding: "0",
       overflow: "overlay",
-      minHeight: "264px",
+      // minHeight: "264px",
 
       '& .MuiAutocomplete-option[aria-selected="true"] ': {
         color: "#1a7ae5",
@@ -59,7 +77,7 @@ const useStyles = makeStyles(() => ({
         width: "6px",
       },
       "&::-webkit-scrollbar *": {
-        background: "transparent", // manage scrollbar background color here
+        background: "transparent",
       },
       "&::-webkit-scrollbar-track": {
         // boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
@@ -81,6 +99,8 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     minHeight: "44px !important",
     margin: "0",
+    paddingTop: "0",
+    paddingBottom: "0",
 
     "& li": {
       paddingBottom: "0",
@@ -98,34 +118,30 @@ const useStyles = makeStyles(() => ({
   shortText: {
     height: "44px",
   },
-  item: {},
-
-  input: {
-    // whiteSpace: "nowrap",
-    // flexFlow: "inherit",
-    // width: "150px !important",
-    // overflow: "hidden",
-    // textOverflow: "ellipsis",
+  inputFocused: {
+    border: "solid 1px #1a7ae5",
   },
 }));
-function CustomSelect() {
+function CustomSelect({ multiple }) {
   const classes = useStyles();
   console.log("classes :>> ", classes);
+  console.log("multiple", multiple);
   return (
     <Autocomplete
       id="combo-box-demo"
+      multiple={multiple}
       options={data}
       style={{ width: 368 }}
       popupIcon={<KeyboardArrowDown />}
       size="small"
       classes={{
+        root: classes.root,
         popper: classes.popper,
         paper: classes.paper,
         option: classes.option,
-        input: classes.input,
-        // inputFocused: classes.inputFocused,
+        focused: classes.focused,
       }}
-      debug={true}
+      // debug={true}
       getOptionLabel={(option) => option.toString()}
       renderOption={(option, { selected }) => (
         <div
@@ -151,5 +167,16 @@ function CustomSelect() {
     />
   );
 }
+
+CustomSelect.propTypes = {
+  /**
+   * Is this the principal call to action on the page?
+   */
+  withLongText: PropTypes.bool,
+  multiple: PropTypes.bool,
+  /**
+   * What background color to use
+   */
+};
 
 export default CustomSelect;

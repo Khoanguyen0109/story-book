@@ -6,20 +6,26 @@ export default {
   component: CustomSelect,
   argTypes: {
     backgroundColor: { control: "color" },
+    multiple: {
+      table: {
+        disable: true,
+      },
+    },
   },
 };
 
 const Template = (args) => <CustomSelect {...args} />;
 
-export const WithLongText = Template.bind({});
-WithLongText.args = {
-  withLongText: true,
+export const Single = Template.bind({});
+Single.args = {
+  // withLongText: true,
   label: "Select",
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
+export const Multiple = Template.bind({});
+Multiple.args = {
   label: "Select",
+  multiple: true,
 };
 
 export const Large = Template.bind({});
